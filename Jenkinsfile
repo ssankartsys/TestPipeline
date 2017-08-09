@@ -13,7 +13,7 @@ pipeline {
             passwordVariable: 'ARTIFACTORY_PASSWORD', 
             usernameVariable: 'ARTIFACTORY_USER'),
         usernamePassword(credentialsId: 'imsadmin', 
-            passwordVariable: 'IMS_PASSWORD', 
+            passwordVariable: 'IMS_PASSWORD',
             usernameVariable: 'IMS_USER')
         ])
     }
@@ -57,7 +57,7 @@ pipeline {
 
         steps{
 
-            echo 'Perform Merge' 
+            echo 'Perform Merge'
 
             sh "./gradlew merge -PtargetURL=${env.PEGA_DEV} -Pbranch=${branchName} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
             echo 'Evaluating merge Id from gradle script = ' + env.MERGE_ID
@@ -103,20 +103,20 @@ pipeline {
             }
         }
 
-        stage('Create restore point') {
+        /*stage('Create restore point') {
 
             steps {
                 echo 'Creating restore point'
                 sh "./gradlew createRestorePoint -PtargetURL=${PEGA_PROD} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
             }
         }
-        stage('Deploy to production') {
+        stage('Deploy to QA') {
 
             steps {
               echo 'Deploying to production : ' + env.PEGA_PROD
               sh "./gradlew performOperation -Dprpc.service.util.action=import -Dpega.rest.server.url=${env.PEGA_PROD}/PRRestService -Dpega.rest.username=${env.IMS_USER}  -Dpega.rest.password=${env.IMS_PASSWORD} -Duser.temp.dir=${WORKSPACE}/tmp"
             }
-        }
+        }*/
   }
 
   post {
