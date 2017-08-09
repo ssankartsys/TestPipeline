@@ -104,10 +104,16 @@ pipeline {
         }
 
         stage('Create restore point') {
+            steps {
+                echo 'Create restore point here in QA'
+            }
 
 
         }
         stage('Deploy to QA') {
+            steps {
+                echo 'Deploy the artifact to QA'
+            }
 
 
         }
