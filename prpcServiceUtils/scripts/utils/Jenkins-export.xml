@@ -1,0 +1,19 @@
+<project name="ExportImport" basedir="." default="exportprops"  xmlns:pega="pega:/pega.com" 
+												xmlns:ac="ac:/antcontrib.org">
+	<target name="findArchive">
+		<property environment="env" />
+		<copy todir="${basedir}/artifact" flatten="true" overwrite="true">
+			<first count="1">
+				<sort>
+					<fileset dir="${basedir}/archiveExport" includes="**/*.zip"/>
+					<reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators">
+						<date />
+					</reverse>
+				</sort>
+			</first>
+		</copy>
+		
+    </target>
+
+</project>
+
