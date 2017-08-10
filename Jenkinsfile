@@ -91,7 +91,6 @@ pipeline {
 
             steps {
                 echo 'Run regression tests'
-                echo 'Publish to production repository'
             }
         }
 
