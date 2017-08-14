@@ -318,6 +318,7 @@ task executePegaUnitTests(type: org._10ne.gradle.rest.RestTask) {
 
 			//println groovy.xml.XmlUtil.serialize(response.testsuites)
 			println response.getClass()
+			println groovy.xml.XmlUtil.serialize(response)
 
 		}
 		//testResultFileHandle.write "${response.data.text}"
