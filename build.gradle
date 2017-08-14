@@ -309,7 +309,7 @@ task executePegaUnitTests(type: org._10ne.gradle.rest.RestTask) {
 	
 
 	httpMethod = 'post'
-	contentType = groovyx.net.http.ContentType.XML
+	contentType = groovyx.net.http.ContentType.TEXT
 
 	responseHandler = { response ->
 		println "Successful test execution. Results are stored at : ${testResultFile.toString()} \n"
