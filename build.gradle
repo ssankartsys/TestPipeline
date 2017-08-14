@@ -300,6 +300,7 @@ task executePegaUnitTests(type: org._10ne.gradle.rest.RestTask) {
 
 	//uri = uri + "&TestSuiteID=${java.net.URLEncoder.encode(testSuite, "UTF-8")}"
 	println uri
+    println requestBody
 
 
 	username = findProperty('pegaUsername')
