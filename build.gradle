@@ -298,7 +298,7 @@ task executePegaUnitTests(type: org._10ne.gradle.rest.RestTask) {
 	requestBody = [TestSuiteID: java.net.URLEncoder.encode(testSuite, "UTF-8")]
 
 
-	uri = uri + "&TestSuiteID=${java.net.URLEncoder.encode(testSuite, "UTF-8")}"
+	//uri = uri + "&TestSuiteID=${java.net.URLEncoder.encode(testSuite, "UTF-8")}"
 	println uri
 
 
