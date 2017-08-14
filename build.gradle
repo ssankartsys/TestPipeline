@@ -314,9 +314,9 @@ task executePegaUnitTests(type: org._10ne.gradle.rest.RestTask) {
 	responseHandler = { response ->
 		println "Successful test execution. Results are stored at : ${testResultFile.toString()} \n"
 		if (response != null) {
-			println "Test Results : ${response.data}"
+			println response.data.text
 		}
-		testResultFileHandle.write "${response.data}"
+		testResultFileHandle.write "${response.data.text}"
 
 		
 		}
