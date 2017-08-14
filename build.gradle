@@ -295,10 +295,10 @@ task executePegaUnitTests(type: org._10ne.gradle.rest.RestTask) {
 
 	uri = "${targetURL}/PRRestService/PegaUnit/Rule-Test-Unit-Case/pzExecuteTests"
 	// Pass in testsutie
-	//requestBody = [TestSuiteID: java.net.URLEncoder.encode(testSuite, "UTF-8")]
+	requestBody = [TestSuiteID: java.net.URLEncoder.encode(testSuite, "UTF-8")]
 
 
-	uri = uri + "&TestSuiteID=${testSuite}"
+	uri = uri + "&TestSuiteID=${java.net.URLEncoder.encode(testSuite, "UTF-8")}"
 	println uri
 
 
