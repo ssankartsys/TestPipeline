@@ -104,12 +104,6 @@ pipeline {
             }
         }
 
-        stage('Regression Tests') {
-
-            steps {
-                echo 'Run regression tests'
-            }
-        }
 
         stage('Fetch from Artifactory') {
 
@@ -134,6 +128,12 @@ pipeline {
             }
 
 
+        }
+        stage('Regression Tests') {
+
+            steps {
+                echo 'Run regression tests'
+            }
         }
 
   }
