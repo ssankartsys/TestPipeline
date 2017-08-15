@@ -100,7 +100,7 @@ publishing {
 }
 
 artifactory {
-	contextUrl = artifactLocation
+	contextUrl = artifactoryURL
 	publish {
 		repository {
 			repoKey = artifactoryRepoKey
