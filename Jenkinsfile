@@ -41,11 +41,9 @@ pipeline {
 
                     junit "TestResult.xml"
 
-                    script {
-                        if (currentBuild.result != null) {
-                            currentBuild.result = 'FAILURE'
-                        }
-                    }
+
+                    echo "RESULT: ${currentBuild.result}"
+
 
 
                 }
