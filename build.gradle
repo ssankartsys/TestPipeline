@@ -44,27 +44,31 @@ ext {
 def buildNumber = findProperty("buildNumber") ?:System.env.BUILD_NUMBER
 def applicationName = findProperty("applicationName") ?:defaultApplicationName
 def applicationVersion = findProperty("applicationVersion") ?:defaultApplicationVersion
-def artifactVersion = findProperty("artifactVersion") ?:applicationVersion + '_' + buildNumber
+def productName = findProperty("productName") ?:defaultProductName
+def productVersion = findProperty("productVersion") ?:defaultProductVersion
+def artifactVersion = findProperty("artifactVersion") ?:productVersion + '_' + buildNumber
 def artifactoryURL = findProperty("artifactoryURL") ?:System.env.ARTIFACTORY_URL
 def artifactorGroup = findProperty("artifactoryGroup") ?:defaultArtifactoryGroup
 def artifactoryRepoKey = findProperty("artifactoryRepoKey") ?:defaultArtifactoryRepoKey
-def archiveName = "${applicationName}_${applicationVersion}"
+def archiveName = "${productName}_${productVersion}"
 def archiveNameWithExt = "${archiveName}.zip"
-def artifactLocation = findProperty("artifactoryLocation") ?:"${artifactoryURL}/${artifactoryRepoKey}/${artifactorGroup}/${applicationName}/${artifactVersion}/${applicationName}-${applicationVersion}_${buildNumber}.zip"
+def artifactLocation = findProperty("artifactoryLocation") ?:"${artifactoryURL}/${artifactoryRepoKey}/${artifactorGroup}/${productName}/${productVersion}/${productName}-${productVersion}_${buildNumber}.zip"
 //replace https with http since the download location does not require sign in
 artifactLocation = artifactLocation.replaceAll(/^https\:/, 'http:')
 def exportAsyncSetting = findProperty("exportAsyncSetting") ?:defaultExportAsyncSetting
 def importAsyncSetting = findProperty("exportAsyncSetting") ?:defaultImportAsyncSetting
 
 group = artifactorGroup
-version = artifactVersion
+version = productVersion
 
 def exportFolder = findProperty("exportFolder") ?: FileFinder.insureDirectoryExists("${buildDir}/export")
 def importFolder = findProperty("importFolder") ?: FileFinder.insureDirectoryExists("${buildDir}/import")
 
 // Define ANT properties for the target defined in prpcServiceUtils
-ant.properties['export.applicationName'] = applicationName
-ant.properties['export.applicationVersion'] = applicationVersion
+//ant.properties['export.applicationName'] = applicationName
+//ant.properties['export.applicationVersion'] = applicationVersion
+ant.properties['export.productName'] = productName
+ant.properties['export.productVersion'] = productVersion
 ant.properties['export.archiveName'] = archiveNameWithExt
 ant.properties['service.responseartifacts.dir'] = exportFolder
 ant.properties['export.async']=exportAsyncSetting
