@@ -107,7 +107,7 @@ artifactory {
 			username = artifactoryUser
 			password = artifactoryPassword
 
-			mavenCompatible = true
+			mavenCompatible = false
 		}
 		defaults {
 			publications ('main')
