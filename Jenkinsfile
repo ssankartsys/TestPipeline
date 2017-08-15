@@ -41,11 +41,7 @@ pipeline {
                     
               junit "TestResult.xml"
 
-              script {
-                if (currentBuild.result != null) {
-                  input(message: 'Ready to share tests have failed, would you like to abort the pipeline?')
-                }
-              }
+
             }
           }
        }
