@@ -79,6 +79,8 @@ ant.properties['import.archive.path']= importFolder
 println "\nBuildNumber : ${buildNumber}"
 println "applicationName : ${applicationName}"
 println "applicationVersion : ${applicationVersion}"
+println "productName : ${productName}"
+println "productVersion : ${productVersion}"
 println "artifactVersion : ${artifactVersion}"
 println "artifactoryURL : ${artifactoryURL}"
 println "artifactorGroup : ${artifactorGroup}"
