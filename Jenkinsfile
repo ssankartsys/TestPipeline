@@ -41,9 +41,14 @@ pipeline {
 
                     junit "TestResult.xml"
 
-                    echo "RESULT: ${currentBuild.result}"
+
 
                     script {
+                        AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                        if (testResultAction != null) {
+                            echo "Tests: ${testResultAction.failCount} / ${testResultAction.failureDiffString} failures of ${testResultAction.totalCount}.\n\n"
+                        }
+
                         if (currentBuild.result != null) {
                             error("PegaUNIT tests have failed.")
                         }
