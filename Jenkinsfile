@@ -20,10 +20,10 @@ pipeline {
 
     stages {
 
-        stage('Check for Merge Conflicts'){
+        stage('Check for Merge Conflicts') {
             steps {
-                echo ('Clear workspace')
-                dir ('build/export') {
+                echo('Clear workspace')
+                dir('build/export') {
                     deleteDir()
                 }
 
@@ -32,51 +32,53 @@ pipeline {
             }
         }
 
-        stage('Run PegaUNIT Tests'){
-          steps {
-            echo 'Execute tests'
+        stage('Run PegaUNIT Tests') {
+            steps {
+                echo 'Execute tests'
 
-            withEnv(['TESTRESULTSFILE="TestResult.xml"']) {
-              sh "./gradlew executePegaUnitTests -PtargetURL=${PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD} -PtestResultLocation=${WORKSPACE} -PtestResultFile=${TESTRESULTSFILE}"
-                    
-              junit "TestResult.xml"
+                withEnv(['TESTRESULTSFILE="TestResult.xml"']) {
+                    sh "./gradlew executePegaUnitTests -PtargetURL=${PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD} -PtestResultLocation=${WORKSPACE} -PtestResultFile=${TESTRESULTSFILE}"
+
+                    junit "TestResult.xml"
 
 
-            }
-          }
-       }
-
-       stage('Merge Branch'){
-        when {
-          environment name: "PERFORM_MERGE", value: "true"
-        }
-
-        steps{
-
-            echo 'Perform Merge'
-
-            sh "./gradlew merge -PtargetURL=${env.PEGA_DEV} -Pbranch=${branchName} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
-            echo 'Evaluating merge Id from gradle script = ' + env.MERGE_ID
-            timeout(time: 5, unit: 'MINUTES') {
-                echo "Setting the timeout for 1 min.."
-                retry(10) {
-                    echo "Merge is still being performed. Retrying..."
-                    sh "./gradlew getMergeStatus -PtargetURL=${env.PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
-                    echo "Merge Status : ${env.MERGE_STATUS}"
                 }
             }
-
-          }
         }
 
-        stage('Notify Merge Completed')
-            steps{
-                mail (
+        stage('Merge Branch') {
+            when {
+                environment name: "PERFORM_MERGE", value: "true"
+            }
+
+            steps {
+
+                echo 'Perform Merge'
+
+                sh "./gradlew merge -PtargetURL=${env.PEGA_DEV} -Pbranch=${branchName} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
+                echo 'Evaluating merge Id from gradle script = ' + env.MERGE_ID
+                timeout(time: 5, unit: 'MINUTES') {
+                    echo "Setting the timeout for 1 min.."
+                    retry(10) {
+                        echo "Merge is still being performed. Retrying..."
+                        sh "./gradlew getMergeStatus -PtargetURL=${env.PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
+                        echo "Merge Status : ${env.MERGE_STATUS}"
+                    }
+                }
+
+            }
+        }
+
+        stage('Notify Merge Completed') {
+            steps {
+                mail(
                         subject: "${JOB_NAME} ${BUILD_NUMBER} merging branch ${branchName} has succeeded",
                         body: "Your merge ${env.BUILD_NUMBER} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
                         to: notificationSendToID
                 )
             }
+        }
+
 
         stage('Export from Dev') {
             steps {
