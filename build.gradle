@@ -50,9 +50,9 @@ def artifactVersion = findProperty("artifactVersion") ?:productVersion + '_' + b
 def artifactoryURL = findProperty("artifactoryURL") ?:System.env.ARTIFACTORY_URL
 def artifactorGroup = findProperty("artifactoryGroup") ?:defaultArtifactoryGroup
 def artifactoryRepoKey = findProperty("artifactoryRepoKey") ?:defaultArtifactoryRepoKey
-def archiveName = "${productName}_${productVersion}"
+def archiveName = "${productName}-${productVersion}_${buildNumber}"
 def archiveNameWithExt = "${archiveName}.zip"
-def artifactLocation = findProperty("artifactoryLocation") ?:"${artifactoryURL}/${artifactoryRepoKey}/${artifactorGroup}/${productName}/${productVersion}/${productName}-${productVersion}_${buildNumber}.zip"
+def artifactLocation = findProperty("artifactoryLocation") ?:"${artifactoryURL}/${artifactoryRepoKey}/${artifactorGroup}/${productName}/${artifactVersion}/${productName}-${productVersion}_${buildNumber}.zip"
 //replace https with http since the download location does not require sign in
 artifactLocation = artifactLocation.replaceAll(/^https\:/, 'http:')
 def exportAsyncSetting = findProperty("exportAsyncSetting") ?:defaultExportAsyncSetting
