@@ -41,7 +41,6 @@ pipeline {
 
                     junit "TestResult.xml"
 
-
                     echo "RESULT: ${currentBuild.result}"
 
 
