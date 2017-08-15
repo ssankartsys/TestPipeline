@@ -43,6 +43,12 @@ pipeline {
 
                     echo "RESULT: ${currentBuild.result}"
 
+                    script {
+                        if (currentBuild.result != null) {
+                            error("PegaUNIT tests have failed.")
+                        }
+                    }
+
 
 
                 }
