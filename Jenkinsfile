@@ -41,6 +41,12 @@ pipeline {
 
                     junit "TestResult.xml"
 
+                    script {
+                        if (currentBuild.result != null) {
+                            currentBuild.result = 'FAILURE'
+                        }
+                    }
+
 
                 }
             }
@@ -73,7 +79,7 @@ pipeline {
             steps {
                 mail(
                         subject: "${JOB_NAME} ${BUILD_NUMBER} merging branch ${branchName} has succeeded",
-                        body: "Your merge ${env.BUILD_NUMBER} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
+                        body: "Your merge of ${branchName} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
                         to: notificationSendToID
                 )
             }
