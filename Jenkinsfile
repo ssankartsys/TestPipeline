@@ -20,7 +20,7 @@ pipeline {
 
     stages {
 
-        stage('Check for merge conflicts'){
+        stage('Check for Merge Conflicts'){
             steps {
                 echo ('Clear workspace')
                 dir ('build/export') {
@@ -32,7 +32,7 @@ pipeline {
             }
         }
 
-        stage('Run unit tests'){
+        stage('Run PegaUNIT Tests'){
           steps {
             echo 'Execute tests'
 
@@ -50,7 +50,7 @@ pipeline {
           }
        }
 
-       stage('Merge branch'){
+       stage('Merge Branch'){
         when {
           environment name: "PERFORM_MERGE", value: "true"
         }
@@ -69,8 +69,18 @@ pipeline {
                     echo "Merge Status : ${env.MERGE_STATUS}"
                 }
             }
+
           }
         }
+
+        stage('Notify Merge Completed')
+            steps{
+                mail (
+                        subject: "${JOB_NAME} ${BUILD_NUMBER} merging branch ${branchName} has succeeded",
+                        body: "Your merge ${env.BUILD_NUMBER} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
+                        to: notificationSendToID
+                )
+            }
 
         stage('Export from Dev') {
             steps {
@@ -102,23 +112,27 @@ pipeline {
             }
         }
 
-        stage('Create restore point') {
+        stage('Create Restore Point') {
             steps {
-                echo 'Create restore point here in QA'
+                echo 'Creating restore point'
+                sh "./gradlew createRestorePoint -PtargetURL=${PEGA_QA} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD}"
             }
 
 
         }
         stage('Deploy to QA') {
             steps {
-                echo 'Deploy the artifact to QA'
+                echo 'Deploying to QA : ' + env.PEGA_QA
+                sh "./gradlew performOperation -Dprpc.service.util.action=import -Dpega.rest.server.url=${env.PEGA_QA}/PRRestService -Dpega.rest.username=${env.IMS_USER}  -Dpega.rest.password=${env.IMS_PASSWORD} -Duser.temp.dir=${WORKSPACE}/tmp"
             }
 
 
         }
+
   }
 
   post {
+
     failure {
       mail (
           subject: "${JOB_NAME} ${BUILD_NUMBER} merging branch ${branchName} has failed",
