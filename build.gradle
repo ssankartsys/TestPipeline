@@ -59,7 +59,7 @@ def exportAsyncSetting = findProperty("exportAsyncSetting") ?:defaultExportAsync
 def importAsyncSetting = findProperty("exportAsyncSetting") ?:defaultImportAsyncSetting
 
 group = artifactorGroup
-version = productVersion
+version = artifactVersion
 
 def exportFolder = findProperty("exportFolder") ?: FileFinder.insureDirectoryExists("${buildDir}/export")
 def importFolder = findProperty("importFolder") ?: FileFinder.insureDirectoryExists("${buildDir}/import")
@@ -100,14 +100,14 @@ publishing {
 }
 
 artifactory {
-	contextUrl = artifactoryURL
+	contextUrl = artifactLocation
 	publish {
 		repository {
 			repoKey = artifactoryRepoKey
 			username = artifactoryUser
 			password = artifactoryPassword
 
-			mavenCompatible = false
+			mavenCompatible = true
 		}
 		defaults {
 			publications ('main')
