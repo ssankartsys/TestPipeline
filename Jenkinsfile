@@ -133,6 +133,8 @@ pipeline {
 
             steps {
                 echo 'Run regression tests'
+                build job: 'GizaTest'
+
             }
         }
 
