@@ -38,7 +38,7 @@ Make sure to install all the associated plugins suggested when installing the ab
 This particular Jenkinsfile assumes that there area few global environment variables available, therefore make sure that the following environment variables are available under *Manage Jenkins --> Configure system* 
 - **ARTIFACTORY_URL**:  url to the artifactory installation 
 - **PEGA_DEV**: url to the Pega 7.3 installation for the dev environment
-- **PEGA_PROD**: url to the Pega 7.3 installation for the production environment
+- **PEGA_QA**: url to the Pega 7.3 installation for the qa environment
 - **PERFORM_MERGE**: true/false value   indicating whether Jenkins should do the actual rules branch merge or not (useful for debugging or simply when testing the pipeline)
 
 As mentioned earlier, the pipeline code assumes that all systems require authentication and as such there are two that is looks for
@@ -52,7 +52,7 @@ Once all of the above have been configured, you need to now create a new Jenkins
 -- **notificationSendToID** (String parameter) : email address of the user that kicked off the build to notify on event of build failure
 - Select *.Do not allow concurrent builds* if you want to avoid having mutlitple builds be active simultaneously especially when dealing with static environments, for example you do not want to have multiple deployments happening simultaneously to a production 
 - Select "Trigger builds remotely (e.g. from scripts)" and fill in the following Authentication Token "IMSStartBuild". This token is what is used to trigger the build remotely from Pega
-- Under the *Pipeline* section, select *Pipeline script from SCM* from the dropdown for Definition, chose *Git* for the SCM and provide this Git repository URL - https://github.com/pw2017-devops/inventory-management-pipeline.git (since this is a Github location, additional authentication is not needed). Leave everything else as default but do ensure that the *Script Path* is set to Jenkinsfile without any other path location in front of it.
+- Under the *Pipeline* section, select *Pipeline script from SCM* from the dropdown for Definition, chose *Git* for the SCM and provide this Git repository URL - https://github.com/tomgoth/inventory-management-pipeline-master.git (since this is a Github location, additional authentication is not needed). Leave everything else as default but do ensure that the *Script Path* is set to Jenkinsfile without any other path location in front of it.
 
 This should now be a fully configured Jenkins project ready to execute a build for the InventoryManagementPipeline application provided as part of the PegaWorld bootcamp.
 

@@ -32,29 +32,6 @@ pipeline {
             }
         }
 
-        stage('Run PegaUNIT Tests') {
-            steps {
-                echo 'Execute tests'
-
-                withEnv(['TESTRESULTSFILE="TestResult.xml"']) {
-                    sh "./gradlew executePegaUnitTests -PtargetURL=${PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD} -PtestResultLocation=${WORKSPACE} -PtestResultFile=${TESTRESULTSFILE}"
-
-                    junit "TestResult.xml"
-
-
-
-                    script {
-                        if (currentBuild.result != null) {
-                            error("PegaUNIT tests have failed.")
-                        }
-                    }
-
-
-
-                }
-            }
-        }
-
         stage('Merge Branch') {
             when {
                 environment name: "PERFORM_MERGE", value: "true"
@@ -85,6 +62,29 @@ pipeline {
                         body: "Your merge of ${branchName} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
                         to: notificationSendToID
                 )
+            }
+        }
+
+        stage('Run PegaUNIT Tests') {
+            steps {
+                echo 'Execute tests'
+
+                withEnv(['TESTRESULTSFILE="TestResult.xml"']) {
+                    sh "./gradlew executePegaUnitTests -PtargetURL=${PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD} -PtestResultLocation=${WORKSPACE} -PtestResultFile=${TESTRESULTSFILE}"
+
+                    junit "TestResult.xml"
+
+
+
+                    script {
+                        if (currentBuild.result != null) {
+                            error("PegaUNIT tests have failed.")
+                        }
+                    }
+
+
+
+                }
             }
         }
 
