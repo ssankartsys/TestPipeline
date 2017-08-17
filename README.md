@@ -58,7 +58,7 @@ This should now be a fully configured Jenkins project ready to execute a build f
 
 
 # Artifactory configuration
-Once you have installed and configured Artifactory, the setup is pretty straightforward, all that is required is a repository that is named **ims_devel_repo**. This pipeline assumes a Maven style repository which should be an option for a standard Artifactory installation. Feel free to experiement with other types of repositories.
+Once you have installed and configured Artifactory, the setup is pretty straightforward, all that is required is a repository that is named **ims_dev_repo**. This pipeline assumes a Maven style repository which should be an option for a standard Artifactory installation. Feel free to experiement with other types of repositories.
 
  
 
