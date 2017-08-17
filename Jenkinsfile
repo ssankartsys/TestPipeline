@@ -127,7 +127,6 @@ pipeline {
                 sh "./gradlew performOperation -Dprpc.service.util.action=import -Dpega.rest.server.url=${env.PEGA_QA}/PRRestService -Dpega.rest.username=${env.IMS_USER}  -Dpega.rest.password=${env.IMS_PASSWORD} -Duser.temp.dir=${WORKSPACE}/tmp"
             }
 
-
         }
 
         stage('QA Acceptance Tests') {
