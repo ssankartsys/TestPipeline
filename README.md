@@ -43,7 +43,7 @@ This particular Jenkinsfile assumes that there area few global environment varia
 
 As mentioned earlier, the pipeline code assumes that all systems require authentication and as such there are two that is looks for
 - **artficatory**: artifactory credentials
-- **imsadmin**: administrative operator credentials used by the pipeline REST invocations that have the appropriate priveleges to execute the serves as well as allow for deployments and schema management on production level 5 environments. For the example application provided in the PegaWorld bootcamp, the username/password is *imsadmin/devops*
+- **imsadmin**: administrative operator credentials used by the pipeline REST invocations that have the appropriate priveleges to execute the serves as well as allow for deployments and schema management on production level 5 environments. For the example application linked above, the username/password is *imsadmin/devops*
 These credentails can be added through *Configure credentials* and ensure that it is available to the project you are going to create below. If you are having issues, ensure that these are global in scope.
 
 Once all of the above have been configured, you need to now create a new Jenkins project. Your goal is to create a new *Pipeline* project, which should be available if you have installed the Pipeline plugin from before. Once you have named and created a new Jenkins project
@@ -54,7 +54,7 @@ Once all of the above have been configured, you need to now create a new Jenkins
 - Select "Trigger builds remotely (e.g. from scripts)" and fill in the following Authentication Token "IMSStartBuild". This token is what is used to trigger the build remotely from Pega
 - Under the *Pipeline* section, select *Pipeline script from SCM* from the dropdown for Definition, chose *Git* for the SCM and provide this Git repository URL - https://github.com/tomgoth/inventory-management-pipeline-master.git (since this is a Github location, additional authentication is not needed). Leave everything else as default but do ensure that the *Script Path* is set to Jenkinsfile without any other path location in front of it.
 
-This should now be a fully configured Jenkins project ready to execute a build for the InventoryManagementPipeline application provided as part of the PegaWorld bootcamp.
+This should now be a fully configured Jenkins project ready to execute a build for the InventoryManagementPipeline application.
 
 
 # Artifactory configuration
