@@ -129,7 +129,16 @@ pipeline {
 
 
         }
-        stage('Regression Tests') {
+
+        stage('QA Acceptance Tests') {
+
+            steps {
+                echo 'Run acceptance tests'
+
+            }
+        }
+
+        stage('QA Regression Tests') {
 
             steps {
                 echo 'Run regression tests'
