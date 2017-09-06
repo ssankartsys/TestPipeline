@@ -57,11 +57,12 @@ pipeline {
 
         stage('Notify Merge Completed') {
             steps {
-                mail(
-                        subject: "${JOB_NAME} ${BUILD_NUMBER} merging branch ${branchName} has succeeded",
-                        body: "Your merge of ${branchName} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
-                        to: notificationSendToID
-                )
+                echo 'Send email notifications'
+//                mail(
+//                        subject: "${JOB_NAME} ${BUILD_NUMBER} merging branch ${branchName} has succeeded",
+//                        body: "Your merge of ${branchName} has succeeded.  Find details at ${env.RUN_DISPLAY_URL}",
+//                        to: notificationSendToID
+//                )
             }
         }
 
