@@ -20,7 +20,7 @@ pipeline {
 
     stages {
 
-        /*stage('Check for Merge Conflicts') {
+        stage('Check for Merge Conflicts') {
             steps {
                 echo('Clear workspace')
                 dir('build/export') {
@@ -64,7 +64,7 @@ pipeline {
                         to: notificationSendToID
                 )
             }
-        }*/
+        }
 
         stage('Run PegaUNIT Tests') {
             steps {
