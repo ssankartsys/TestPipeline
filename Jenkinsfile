@@ -84,8 +84,10 @@ pipeline {
             }
         }
 
-        stage("Manual Approval Gate"){
-
+        stage("Manual Approval"){
+            steps {
+                input "Deploy to QA?"
+            }
         }
 
 
