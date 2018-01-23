@@ -66,28 +66,7 @@ pipeline {
             }
         }*/
 
-        stage('Run PegaUNIT Tests') {
-            steps {
-                echo 'Execute tests'
 
-                withEnv(['TESTRESULTSFILE="TestResult.xml"']) {
-                    sh "./gradlew executePegaUnitTests -PtargetURL=${PEGA_DEV} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD} -PtestResultLocation=${WORKSPACE} -PtestResultFile=${TESTRESULTSFILE}"
-
-                    junit "TestResult.xml"
-
-
-
-                    script {
-                        if (currentBuild.result != null) {
-                            error("PegaUNIT tests have failed.")
-                        }
-                    }
-
-
-
-                }
-            }
-        }
 
 
         stage('Export from Dev') {
@@ -103,6 +82,10 @@ pipeline {
                 echo 'Publishing to Artifactory '
                 sh "./gradlew artifactoryPublish -PartifactoryUser=${ARTIFACTORY_USER} -PartifactoryPassword=${ARTIFACTORY_PASSWORD}"
             }
+        }
+
+        stage("Manual Approval Gate"){
+
         }
 
 
@@ -128,6 +111,29 @@ pipeline {
                 sh "./gradlew performOperation -Dprpc.service.util.action=import -Dpega.rest.server.url=${env.PEGA_QA}/PRRestService -Dpega.rest.username=${env.IMS_USER}  -Dpega.rest.password=${env.IMS_PASSWORD} -Duser.temp.dir=${WORKSPACE}/tmp"
             }
 
+        }
+
+        stage('Run PegaUNIT Tests') {
+            steps {
+                echo 'Execute tests'
+
+                withEnv(['TESTRESULTSFILE="TestResult.xml"']) {
+                    sh "./gradlew executePegaUnitTests -PtargetURL=${PEGA_QA} -PpegaUsername=${IMS_USER} -PpegaPassword=${IMS_PASSWORD} -PtestResultLocation=${WORKSPACE} -PtestResultFile=${TESTRESULTSFILE}"
+
+                    junit "TestResult.xml"
+
+
+
+                    script {
+                        if (currentBuild.result != null) {
+                            error("PegaUNIT tests have failed.")
+                        }
+                    }
+
+
+
+                }
+            }
         }
 
         stage('QA Acceptance Tests') {
