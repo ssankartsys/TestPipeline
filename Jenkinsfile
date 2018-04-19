@@ -153,7 +153,7 @@ pipeline {
 
                     script {
                         if (currentBuild.result != null) {
-                            error("PegaUNIT tests have failed.")
+                            error("PegaUNIT tests have failed in QA.")
                         }
                     }
 
