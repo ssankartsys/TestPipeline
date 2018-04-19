@@ -66,7 +66,7 @@ pipeline {
             }
         }*/
 
-        stage('Run PegaUNIT Tests in Dev') {
+        stage('PegaUNITs in Dev') {
             steps {
                 echo 'Execute tests'
 
@@ -140,7 +140,7 @@ pipeline {
 
         }
 
-        stage('Run PegaUNIT Tests in QA') {
+        stage('PegaUNITs in QA') {
             steps {
                 echo 'Execute tests'
 
